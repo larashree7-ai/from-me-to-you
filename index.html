@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Anniversary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #5b3b4c;
+      background: linear-gradient(135deg, #ffe4f4, #ffeafd, #f7ecff, #ffeaf2);
+      background-size: 300% 300%;
+      animation: bgShift 18s ease-in-out infinite;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 80% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      max-height: 900px;
+      padding: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    /* LILIES BOUQUET */
+    .lilies-wrapper {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 260px;
+      pointer-events: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .bouquet {
+      position: relative;
+      width: 190px;
+      height: 230px;
+      transform-origin: bottom center;
+      opacity: 0;
+      animation:
+        bouquetGrow 4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards,
+        bouquetSway 10s ease-in-out 4s infinite;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 10px 18px rgba(210, 150, 195, 0.7));
+    }
+
+    @keyframes bouquetGrow {
+      0%   { transform: translateY(80px) scaleY(0.1) scaleX(0.8); opacity: 0; }
+      40%  { opacity: 1; }
+      70%  { transform: translateY(0) scale(1.04); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes bouquetSway {
+      0%   { transform: translateY(0) rotate(0deg); }
+      25%  { transform: translateY(0) rotate(1.8deg); }
+      50%  { transform: translateY(0) rotate(0deg); }
+      75%  { transform: translateY(0) rotate(-1.8deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .bouquet svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* HEART / ENVELOPE */
+    .heart-envelope-wrapper {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-out;
+    }
+
+    .heart-envelope-wrapper.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .heart {
+      position: relative;
+      width: 220px;
+      height: 190px;
+      background: radial-gradient(circle at 30% 20%, #ffe7f1, #ffc5d8);
+      transform: rotate(-45deg) scale(1);
+      border-radius: 40px;
+      box-shadow:
+        0 12px 26px rgba(216, 140, 186, 0.6),
+        0 0 26px rgba(255, 190, 230, 0.9);
+      cursor: pointer;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      animation: heartGlow 2s ease-in-out infinite alternate;
+      will-change: transform, box-shadow;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 190px;
+      background: radial-gradient(circle at 30% 20%, #ffeef6, #ffd7e5);
+      border-radius: 50%;
+      box-shadow: inherit;
+    }
+    .heart::before {
+      top: -110px;
+      left: 0;
+    }
+    .heart::after {
+      left: 110px;
+      top: 0;
+    }
+
+    .heart:hover {
+      transform: rotate(-45deg) scale(1.05);
+      box-shadow:
+        0 14px 30px rgba(216, 140, 186, 0.7),
+        0 0 32px rgba(255, 205, 238, 1);
+    }
+
+    @keyframes heartGlow {
+      0%   { box-shadow: 0 10px 22px rgba(218,120,170,0.55); }
+      100% { box-shadow: 0 16px 30px rgba(218,120,170,0.85); }
+    }
+
+    .tap-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(45deg);
+      font-family: "Pacifico", cursive;
+      font-size: 20px;
+      font-weight: 600;
+      text-transform: lowercase;
+      color: #ffffff;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.95),
+        0 2px 6px rgba(0,0,0,0.35),
+        0 0 12px rgba(255,255,255,0.85);
+      letter-spacing: 1px;
+      pointer-events: none;
+      animation: tapPulse 2s ease-in-out infinite;
+    }
+
+    .tap-text.hidden {
+      opacity: 0;
+    }
+
+    @keyframes tapPulse {
+      0%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+      50%      { opacity: 0.96; transform: rotate(45deg) scale(1.06); }
+    }
+
+    .heart.opened {
+      animation: cardBreath 4s ease-in-out infinite;
+      transform: scale(1.03);
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffeaf4, #ffd7e8);
+      box-shadow:
+        0 12px 28px rgba(210, 130, 190, 0.65),
+        0 0 20px rgba(255, 205, 238, 0.95);
+      transition: transform 0.6s ease, border-radius 0.6s ease, background 0.6s ease;
+    }
+
+    .heart.opened::before,
+    .heart.opened::after {
+      display: none;
+    }
+
+    @keyframes cardBreath {
+      0%, 100% { transform: scale(1.03); }
+      50%      { transform: scale(1.06); }
+    }
+
+    .envelope-flap {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffd1dc, #ffeaf4);
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transition: transform 0.7s ease-in-out;
+      pointer-events: none;
+    }
+
+    .heart.opened .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    /* MESSAGE CARD & TEXT */
+    .message-card {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85%;
+      max-height: 75%;
+      padding: 16px 18px 18px;
+      background: #fff9ff;
+      border-radius: 22px;
+      box-shadow:
+        0 14px 30px rgba(255, 190, 220, 0.7),
+        0 -2px 8px rgba(255, 255, 255, 0.9);
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart.opened .message-card {
+      opacity: 1;
+      transition: opacity 0.7s ease 0.3s;
+      pointer-events: auto;
+    }
+
+    .message-line {
+      font-size: 18px;
+      line-height: 1.45;
+      color: #ff7aa5;
+      text-shadow: 0 1px 3px rgba(200, 120, 170, 0.5);
+      overflow: hidden;
+      margin-bottom: 6px;
+      opacity: 0;
+      text-align: center;
+      letter-spacing: 0.4px;
+    }
+
+    .message-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-line.show {
+      opacity: 1;
+      animation: fadeInLine 0.8s ease forwards;
+    }
+
+    .message-line:nth-child(3).show { animation-delay: 0.05s; }
+    .message-line:nth-child(4).show { animation-delay: 0.1s; }
+    .message-line:nth-child(5).show { animation-delay: 0.15s; }
+
+    @keyframes fadeInLine {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tiny pastel bows */
+    .message-card { position: relative; }
+
+    .corner-bow {
+      position: absolute;
+      width: 22px;
+      height: 14px;
+      transform-origin: center;
+      z-index: 3;
+    }
+
+    .corner-bow::before,
+    .corner-bow::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50% 50% 50% 0;
+      background: #ffc5d8;
+      box-shadow: 0 1px 3px rgba(220, 150, 190, 0.5);
+    }
+
+    .corner-bow::before {
+      left: 0;
+      transform: rotate(18deg);
+    }
+    .corner-bow::after {
+      right: 0;
+      transform: scaleX(-1) rotate(18deg);
+    }
+
+    .bow-top-left {
+      top: 6px;
+      left: 10px;
+      transform: rotate(-18deg);
+    }
+
+    .bow-top-right {
+      top: 6px;
+      right: 10px;
+      transform: rotate(18deg);
+    }
+
+    /* FIREFLIES from bouquet */
+    .firefly-layer {
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 160px;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .firefly {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff9b0, #ffd447);
+      box-shadow:
+        0 0 6px rgba(255, 240, 160, 0.9),
+        0 0 10px rgba(255, 220, 120, 0.9);
+      opacity: 0;
+      animation: fireflyDrift 4.5s ease-out forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes fireflyDrift {
+      0% {
+        transform: translate3d(0, 0, 0) scale(0.4);
+        opacity: 0;
+      }
+      15% { opacity: 1; }
+      70% { opacity: 0.9; }
+      100% {
+        transform: translate3d(var(--dx), -90px, 0) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* HINT + SIGNATURE */
+    .hint {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 13px;
+      color: rgba(110, 70, 90, 0.7);
+      text-shadow: 0 1px 2px rgba(255, 230, 245, 0.8);
+    }
+
+    .signature {
+  position: fixed;
+  right: 6px;
+  bottom: 4px;
+  font-size: 9px;
+  color: rgba(120, 80, 110, 0.6);
+  pointer-events: none;
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <!-- Lilies bouquet -->
+    <div class="lilies-wrapper">
+      <div class="bouquet">
+        <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- stems / leaves group -->
+          <g class="stems">
+            <path d="M60 210 C58 160 56 120 58 90" stroke="#7bb66f" stroke-width="5" stroke-linecap="round" />
+            <path d="M50 210 C48 165 46 130 44 100" stroke="#88c97a" stroke-width="4" stroke-linecap="round" />
+            <path d="M70 210 C72 165 74 130 76 100" stroke="#88c97a" stroke-width="4" stroke-linecap="round" />
+            <path d="M40 150 C30 145 25 135 22 125" stroke="#6fb26a" stroke-width="4" stroke-linecap="round" />
+            <path d="M80 150 C90 145 95 135 98 125" stroke="#6fb26a" stroke-width="4" stroke-linecap="round" />
+          </g>
+          <!-- bouquet ribbon -->
+          <ellipse cx="60" cy="170" rx="22" ry="10" fill="#ffbcd8" />
+          <ellipse cx="60" cy="170" rx="14" ry="6" fill="#ff9ac6" />
+          <!-- lily heads -->
+          <g class="flowers">
+            <!-- center lily -->
+            <g transform="translate(60,85)">
+              <path d="M0 -5 C-12 -25 -8 -40 0 -46 C8 -40 12 -25 0 -5" fill="#fffafc" stroke="#f3d9ec" stroke-width="1.5" />
+              <path d="M0 -2 C-10 -15 -16 -25 -18 -35 C-6 -32 -2 -20 0 -2" fill="#fff7fb" stroke="#f0cede" stroke-width="1" />
+              <path d="M0 -2 C10 -15 16 -25 18 -35 C6 -32 2 -20 0 -2" fill="#fff7fb" stroke="#f0cede" stroke-width="1" />
+              <circle cx="0" cy="-10" r="4.5" fill="#ffd4b5" />
+              <circle cx="0" cy="-10" r="2.4" fill="#ff9a8b" />
+            </g>
+            <!-- left lily -->
+            <g transform="translate(42,90) rotate(-16)">
+              <path d="M0 -5 C-10 -22 -7 -35 0 -40 C7 -35 10 -22 0 -5" fill="#fffafc" stroke="#f3d9ec" stroke-width="1.4" />
+              <path d="M0 -3 C-9 -14 -13 -23 -15 -31 C-5 -29 -2 -19 0 -3" fill="#fff7fb" stroke="#f0cede" stroke-width="1" />
+              <path d="M0 -3 C9 -14 13 -23 15 -31 C5 -29 2 -19 0 -3" fill="#fff7fb" stroke="#f0cede" stroke-width="1" />
+              <circle cx="0" cy="-9" r="4" fill="#ffd4b5" />
+              <circle cx="0" cy="-9" r="2.2" fill="#ff9a8b" />
+            </g>
+            <!-- right lily -->
+            <g transform="translate(78,90) rotate(16)">
+              <path d="M0 -5 C-10 -22 -7 -35 0 -40 C7 -35 10 -22 0 -5" fill="#fffafc" stroke="#f3d9ec" stroke-width="1.4" />
+              <path d="M0 -3 C-9 -14 -13 -23 -15 -31 C-5 -29 -2 -19 0 -3" fill="#fff7fb" stroke="#f0cede" stroke-width="1" />
+              <path d="M0 -3 C9 -14 13 -23 15 -31 C5 -29 2 -19 0 -3" fill="#fff7fb" stroke="#f0cede" stroke-width="1" />
+              <circle cx="0" cy="-9" r="4" fill="#ffd4b5" />
+              <circle cx="0" cy="-9" r="2.2" fill="#ff9a8b" />
+            </g>
+            <!-- small front lily -->
+            <g transform="translate(52,108) scale(0.8)">
+              <path d="M0 -5 C-9 -20 -6 -32 0 -36 C6 -32 9 -20 0 -5" fill="#fffafc" stroke="#f3d9ec" stroke-width="1.2" />
+              <circle cx="0" cy="-9" r="3.5" fill="#ffd4b5" />
+              <circle cx="0" cy="-9" r="2" fill="#ff9a8b" />
+            </g>
+            <!-- small front lily -->
+            <g transform="translate(68,108) scale(0.8)">
+              <path d="M0 -5 C-9 -20 -6 -32 0 -36 C6 -32 9 -20 0 -5" fill="#fffafc" stroke="#f3d9ec" stroke-width="1.2" />
+              <circle cx="0" cy="-9" r="3.5" fill="#ffd4b5" />
+              <circle cx="0" cy="-9" r="2" fill="#ff9a8b" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="firefly-layer" id="fireflies"></div>
+    </div>
+
+    <!-- Heart / envelope -->
+    <div class="heart-envelope-wrapper" id="heartWrapper">
+      <div class="heart" id="heart">
+        <div class="envelope-flap"></div>
+        <div class="tap-text" id="tapText">only for your eyes</div>
+        <div class="message-card" id="messageCard">
+          <div class="corner-bow bow-top-left"></div>
+          <div class="corner-bow bow-top-right"></div>
+
+          <div class="message-line" id="line1">
+            happy anniversary baby 💖🥰🌸💕
+          </div>
+          <div class="message-line" id="line2">
+            hope we always stay together 🌷💞💌
+          </div>
+          <div class="message-line" id="line3">
+            ilysm mwah mwah!!!! 😘💖💫💌
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint" id="hintText">wait for the lilies to bloom…</div>
+  </div>
+
+  <div class="signature">lara 🩷🎀 piyush</div>
+
+  <script>
+    // Show heart after bouquet finished growing
+    window.addEventListener("load", function () {
+      const heartWrapper = document.getElementById("heartWrapper");
+      const hintText = document.getElementById("hintText");
+
+      setTimeout(() => {
+        heartWrapper.classList.add("show");
+        hintText.textContent = "only for your eyes 💌";
+      }, 4300); // a bit after bouquet animation
+    });
+
+    // Heart click -> open envelope & reveal message
+    const heart = document.getElementById("heart");
+    const tapText = document.getElementById("tapText");
+    const lines = [
+      document.getElementById("line1"),
+      document.getElementById("line2"),
+      document.getElementById("line3"),
+    ];
+    let opened = false;
+
+    heart.addEventListener("click", () => {
+      if (opened) return;
+      opened = true;
+
+      heart.classList.add("opened");
+      tapText.classList.add("hidden");
+
+      setTimeout(() => {
+        lines.forEach((line, index) => {
+          setTimeout(() => {
+            line.classList.add("show");
+          }, index * 300);
+        });
+      }, 500);
+    });
+
+    // Fireflies from bouquet
+    const fireflyContainer = document.getElementById("fireflies");
+
+    function createFirefly() {
+      const el = document.createElement("div");
+      el.className = "firefly";
+      const offset = (Math.random() - 0.5) * 120; // horizontal spread
+      el.style.setProperty("--dx", offset + "px");
+      el.style.left = "50%";
+      el.style.bottom = "0px";
+      el.style.transform = "translate3d(0,0,0)";
+      fireflyContainer.appendChild(el);
+      setTimeout(() => {
+        el.remove();
+      }, 4800);
+    }
+
+    // start fireflies a little after bouquet appears
+    setTimeout(() => {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(createFirefly, i * 450);
+      }
+      setInterval(() => {
+        createFirefly();
+      }, 1300);
+    }, 3500);
+  </script>
+</body>
+</html>
